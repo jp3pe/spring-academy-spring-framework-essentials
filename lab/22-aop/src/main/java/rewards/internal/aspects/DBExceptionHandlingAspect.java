@@ -15,7 +15,7 @@ public class DBExceptionHandlingAspect {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @AfterThrowing(pointcut = "execution(* rewards.internal.*.*Repository.* (..))", throwing = "e")
+    @AfterThrowing(value = "execution(* rewards.internal.*.*Repository.* (..))", throwing = "e")
     public void implExceptionHandling(RewardDataAccessException e) {
         // Log a failure warning
         logger.warn(EMAIL_FAILURE_MSG + e + "\n");
