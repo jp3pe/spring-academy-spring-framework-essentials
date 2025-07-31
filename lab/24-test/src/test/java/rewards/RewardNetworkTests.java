@@ -1,9 +1,13 @@
 package rewards;
 
 import common.money.MonetaryAmount;
+import config.RewardsConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
@@ -15,16 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * application for use in a test environment.
  */
 
-/* TODO-08 (Optional): Create an inner static class from TestInfrastructureConfig
- * - Once inner static class is created, remove configuration
- *   class reference to TestInfrastructureConfig class from the annotation
- *   you added to this class in TO DO-01 above. (For more detailed on, refer tp
- *   lab document.)
- * - Run the test again.
- */
-
 @ActiveProfiles({"jdbc", "local"})
-@SpringJUnitConfig(classes = TestInfrastructureConfig.class)
+@SpringJUnitConfig()
 public class RewardNetworkTests {
     /**
      * The object being tested.
@@ -74,5 +70,20 @@ public class RewardNetworkTests {
                         MonetaryAmount.valueOf("4.00"),
                         contribution.getDistribution("Annabelle").getAmount()),
                 () -> assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Corgan").getAmount()));
+    }
+
+    @Configuration
+    @Import({
+            TestInfrastructureLocalConfig.class, TestInfrastructureJndiConfig.class, RewardsConfig.class
+    })
+    static public class TestInfrastructureConfig {
+
+        /**
+         * The bean logging post-processor from the bean lifecycle slides.
+         */
+        @Bean
+        public static LoggingBeanPostProcessor loggingBean() {
+            return new LoggingBeanPostProcessor();
+        }
     }
 }
