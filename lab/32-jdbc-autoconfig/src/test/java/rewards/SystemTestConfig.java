@@ -17,12 +17,10 @@ import javax.sql.DataSource;
 public class SystemTestConfig {
     private final Logger logger = LoggerFactory.getLogger(SystemTestConfig.class);
 
-//	@Bean
     public DataSource dataSource() {
         logger.debug("Creating the datasource bean explicitly");
 
         return (new EmbeddedDatabaseBuilder()).addScript("classpath:rewards/testdb/schema.sql").addScript(
                 "classpath:rewards/testdb/data.sql").build();
     }
-
 }
