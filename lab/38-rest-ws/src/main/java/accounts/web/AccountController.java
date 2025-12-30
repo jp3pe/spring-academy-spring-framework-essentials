@@ -96,28 +96,20 @@ public class AccountController {
      * Adds a Beneficiary with the given name to the Account with the given id,
      * setting its URL as the Location header on the response.
      */
-    // TODO-10: Complete this method. Add annotations to:
-    // a. Respond to a POST /accounts/{accountId}/beneficiaries
-    // b. Extract a beneficiary name from the incoming request
-    // c. Indicate a "201 Created" status
-    public ResponseEntity<Void> addBeneficiary(long accountId, String beneficiaryName) {
+    @PostMapping(value = "/accounts/{accountId}/beneficiaries")
+    public ResponseEntity<Void> addBeneficiary(@PathVariable long accountId, @RequestBody String beneficiaryName) {
+        accountManager.addBeneficiary(accountId, beneficiaryName);
 
-        // TODO-11: Create a ResponseEntity containing the location of the newly
-        // created beneficiary.
-        // a. Use accountManager's addBeneficiary method to add a beneficiary to an account
-        // b. Use the entityWithLocation method - like we did for createAccount().
-
-        return null;  // Modify this to return something
+        return entityWithLocation(beneficiaryName);
     }
 
     /**
      * Removes the Beneficiary with the given name from the Account with the
      * given id.
      */
-    // TODO-12: Complete this method by adding the appropriate annotations to:
-    // a. Respond to a DELETE to /accounts/{accountId}/beneficiaries/{beneficiaryName}
-    // b. Indicate a "204 No Content" status
-    public void removeBeneficiary(long accountId, String beneficiaryName) {
+    @DeleteMapping(value = "/accounts/{accountId}/beneficiaries/{beneficiaryName}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeBeneficiary(@PathVariable long accountId, @PathVariable String beneficiaryName) {
         Account account = accountManager.getAccount(accountId);
         if (account == null) {
             throw new IllegalArgumentException("No such account with id " + accountId);
