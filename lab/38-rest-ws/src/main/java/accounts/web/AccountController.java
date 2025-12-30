@@ -5,6 +5,7 @@ import common.money.Percentage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -136,6 +137,16 @@ public class AccountController {
     public void handleNotFound(Exception ex) {
         logger.error("Exception is: ", ex);
         // just return empty 404
+    }
+
+    /**
+     * Maps DataIntegrityViolationException to a 409 Conflict HTTP status code.
+     */
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public void handleAlreadyExists(Exception ex) {
+        logger.error("Exception is: ", ex);
+        // return empty 409
     }
 
     // TODO-17 (Optional): Add a new exception-handling method
