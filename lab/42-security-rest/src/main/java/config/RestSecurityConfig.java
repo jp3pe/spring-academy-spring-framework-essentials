@@ -43,7 +43,7 @@ public class RestSecurityConfig {
         return http.build();
     }
 
-/*    @Bean
+    @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails user = User.withUsername("user").password(passwordEncoder.encode("user")).roles("USER").build();
         UserDetails admin = User.withUsername("admin").password(passwordEncoder.encode("admin")).roles("USER", "ADMIN")
@@ -52,7 +52,7 @@ public class RestSecurityConfig {
                 .roles("USER", "ADMIN", "SUPERADMIN").build();
 
         return new InMemoryUserDetailsManager(user, admin, superadmin);
-    }*/
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

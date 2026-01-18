@@ -3,13 +3,13 @@ package accounts.services;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class AccountService {
     @PreAuthorize("hasRole('ADMIN') && #username == authentication.name")
     public List<String> getAuthoritiesForUser(String username) {
