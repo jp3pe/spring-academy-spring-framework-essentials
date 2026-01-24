@@ -25,14 +25,12 @@ import java.util.List;
 public class AccountController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final Counter counter;
     private final Timer timer;
     private final AccountManager accountManager;
 
     @Autowired
     public AccountController(AccountManager accountManager, MeterRegistry meterRegistry) {
         this.accountManager = accountManager;
-        this.counter = meterRegistry.counter("account.fetch", "type", "fromCode");
         this.timer = meterRegistry.timer("accounts.timer");
     }
 
@@ -47,7 +45,6 @@ public class AccountController {
     @Timed(value = "account.timer", extraTags = {"source", "accountDetails"})
     @GetMapping(value = "/accounts/{id}")
     public Account accountDetails(@PathVariable int id) {
-        counter.increment();
 
         return retrieveAccount(id);
     }
