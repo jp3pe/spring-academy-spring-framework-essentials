@@ -10,6 +10,3 @@ dependencies {
 
 springBoot { buildInfo() }
 
-// TO-DO-07: Add BuildInfo task to the Spring Boot Gradle plugin
-
-// TO-DO-08: Add additional properties of name, javaVersion, operatingSystem
